@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
+    <title>Visualizador Restaurants UberEats</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+
+  <body>
+    <div class="horizontal-flex-container" style="display: flex">
+      <div id="map-container" style="flex: 8">
+        <svg id="map-svg"></svg>
+      </div>
+      <div class="descripcion" style="flex: 3">
+        <div class="input-container">
+          <h3>Filtros</h3>
+          <div>
+            <select name="categorie-select" id="categorie-select">
+              <option disabled selected>Categoría...</option>
+              <option>Todas las categorías</option>
+            </select>
+          </div>
+          <div class="price-container">
+            <button class="price-button" id="price-button-1">$</button>
+            <button class="price-button" id="price-button-2">$$</button>
+            <button class="price-button" id="price-button-3">$$$</button>
+          </div>
+          <div class="range-title">Selecciona la calificación mínima</div>
+          <div class="range-container">
+            <input
+              type="range"
+              min="1"
+              max="5"
+              step="0.1"
+              value="5"
+              id="rating-input"
+            />
+            <output id="range-value">1 ⭐</output>
+            <div class="rating-values">
+              <output>1⭐</output><output>3⭐</output><output>5⭐</output>
+            </div>
+          </div>
+        </div>
+        <h3>Descripción</h3>
+        <p>Esta herramienta es un visualizador de restaurantes de <a href="https://www.ubereats.com/cl">UberEats</a>, y permite filtrar los datos para encontrar la ubicación del restaurant que se acomode a tus gustos!</p>
+      </div>
+    </div>
+    <script src="./src/map.js"></script>
+  </body>
+</html>

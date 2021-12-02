@@ -1,0 +1,142 @@
+body {
+  font-family: "roboto", sans-serif;
+  width: 90%;
+  margin: auto;
+  background-color: #140E00;
+  color: white;
+}
+
+#title {
+  font-size: 24px;
+  fill: #EE9B00;
+  font-weight: bold;
+}
+
+.tooltip {
+  font-size: 12px;
+  color: ivory;
+  background-color: black;
+  position: absolute;
+  border-width: 1px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.descripcion {
+  margin-top: 4%;
+}
+
+a {
+  color: #EE9B00;
+}
+b {
+  color: #EE9B00;
+}
+h3 {
+  color: #EE9B00;
+}
+
+select {
+  background: transparent;
+  border-color: gray;
+  border-radius: 15px;
+  font-size: 14px;
+  height: 30px;
+  padding: 5px;
+  width: 250px;
+  color: white;
+}
+
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: space-around;
+  justify-content: space-around;
+}
+
+.flex-container > div {
+  border-width: 2px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 10px;
+  font-size: 14px;
+  height: 25px;
+  padding: 5px;
+  display: flex;
+  position: relative;
+  padding-left: 25px;
+  padding-right: 30px;
+  min-width: 100px;
+}
+
+.deselect {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: transparent;
+  text-shadow: 0 0 0 #EE9B00;
+  vertical-align: middle;
+  text-align: end;
+  margin: auto;
+}
+
+/* button {
+    background-color: transparent;
+    border-width: 0;
+} */
+
+.color-box {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: black;
+  width: 20px;
+  height: 20px;
+}
+
+p {
+  text-align: center;
+  margin: auto;
+}
+
+button {
+  background-color: #EE9B00; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  display: inline-block;
+  font-size: 12px;
+  border-radius: 15px;
+}
+
+button:hover {
+  opacity: 0.7;
+  color: white;
+}
+
+.range-container {
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+}
+.price-container {
+  margin-top: 2vh;
+}
+.range-title {
+  margin-top: 2vh;
+}
+.rating-values {
+  width: 15vw;
+  display: flex;
+  justify-content: space-between;
+}
+#rating-input {
+  width: 15vw;
+  vertical-align: middle;
+  direction: rtl;
+  fill: red;
+}
+#categorie-select {
+  margin-top: 1vh;
+}
