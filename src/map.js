@@ -72,10 +72,54 @@ getCategories = (restaurants) => {
   return categoriesFinal;
 };
 
+getComuna = (comuna) => {
+  const comunas = {
+    "lagranja": "LaGranja",
+    "macul": "Macul",
+    "penalolen": "Peñalolén",
+    "pac": "PedroAguirreCerda",
+    "sanmiguel": "SanMiguel",
+    "sanjoaquin": "SanJoaquín",
+    "estacioncentral": "EstaciónCentral",
+    "loespejo": "LoEspejo",
+    "santiago": "Santiago",
+    "maipu": "Maipú",
+    "lacisterna": "LaCisterna",
+    "lareina": "LaReina",
+    "independencia": "Independencia",
+    "recoleta": "Recoleta",
+    "providencia": "Providencia",
+    "laflorida": "LaFlorida",
+    "quintanormal": "QuintaNormal",
+    "renca": "Renca",
+    "loprado": "LoPrado",
+    "pudahuel": "Pudahuel",
+    "lascondes": "LasCondes",
+    "vitacura": "Vitacura",
+    "elbosque": "ElBosque",
+    "lobarnechea": "LoBarnechea",
+    "cerronavia": "CerroNavia",
+    "sanramon": "SanRamón",
+    "cerrillos": "Cerrillos",
+    "colina": "Colina",
+    "conchali": "Conchalí",
+    "quilicura": "Quilicura",
+    "huechuraba": "Huechuraba",
+    "lapintana": "LaPintana",
+    "lampa": "Lampa",
+    "sanbernardo": "SanBernardo",
+    "nunoa": "Ñuñoa",
+    "puentealto": "PuenteAlto"
+  };
+
+  let normalizedComuna = comuna.toLowerCase().normalize("NFKD").replace(/[^\w]/g, '');
+  return comunas[normalizedComuna];
+};
+
 async function initialLoad() {
   const comunasStgo = await d3.json("./src/data/comunas.geojson");
   const streetsStgo = await d3.json("./src/data/streets_stgo.geojson");
-  const uberRestaurants = await d3.json("./src/data/uber_restaurants.json");
+  const uberRestaurants = await d3.json("./src/data/uber_restaurants2.json");
 
   const categories = getCategories(uberRestaurants);
   categories.forEach((categorie) => {
@@ -137,7 +181,7 @@ const mouseleave = function (e, d) {
 const proyeccion = d3.geoMercator();
 
 const escalaRadio = function (value) {
-  return value-1;
+  return (value - 1) * 0.7;
 };
 
 const priceColors = {
@@ -179,10 +223,10 @@ const addPriceLegend = function () {
 };
 
 const addRatingLegend = function () {
-  const ratings = [2,3,4,5];
+  const ratings = [2, 3, 4, 5];
 
   let yLegend = -55;
-  for (i in ratings){
+  for (i in ratings) {
     let rating = ratings[i];
     yLegend += 27;
     svg
@@ -197,11 +241,11 @@ const addRatingLegend = function () {
       .append("circle")
       .attr("cx", margin.left + 15)
       .attr("cy", height - margin.bottom - yLegend)
-      .attr("r", escalaRadio(rating)*3.5)
+      .attr("r", escalaRadio(rating) * 3.5)
       .style("vertical-align", "middle")
       .style("fill", "#DE686C");
   }
-}
+};
 
 initialLoad().then(({ comunasStgo, streetsStgo, uberRestaurants }) => {
   proyeccion.fitSize([width, height], comunasStgo);
@@ -216,6 +260,7 @@ initialLoad().then(({ comunasStgo, streetsStgo, uberRestaurants }) => {
     .style("stroke", "ivory")
     .style("stroke-width", 1.8)
     .attr("class", "stgo")
+    .attr("id", (d) => getComuna(d.properties.COMUNA))
     .attr("d", caminosGeo)
     .attr("opacity", "0.5");
 
@@ -245,9 +290,16 @@ initialLoad().then(({ comunasStgo, streetsStgo, uberRestaurants }) => {
     .on("mouseleave", mouseleave)
     .on("click", clickRestaurant);
 
-    addRatingLegend();
-    addPriceLegend();
+  addRatingLegend();
+  addPriceLegend();
 });
+
+filterDeliveries = async (deliveryId) => {
+  const uberDeliveries = await d3.json("./src/data/uber_deliveries2.json");
+  return uberDeliveries.filter(function (d) {
+    return d.deliveryId === deliveryId;
+  });
+};
 
 filterData = async (
   priceRange1,
@@ -256,7 +308,7 @@ filterData = async (
   categorie,
   rating
 ) => {
-  const uberRestaurants = await d3.json("./src/data/uber_restaurants.json");
+  const uberRestaurants = await d3.json("./src/data/uber_restaurants2.json");
   return uberRestaurants.filter(function (d) {
     qualifies = true;
     if (priceRange1 && priceRange2 && priceRange3) {
@@ -388,10 +440,34 @@ priceButton3.onclick = async () => {
 };
 
 ratingSlider.addEventListener("change", async function () {
-  rangeValue.innerHTML = Math.round(Math.abs(6 - ratingSlider.value) * 10) / 10 + " ⭐";
+  rangeValue.innerHTML =
+    Math.round(Math.abs(6 - ratingSlider.value) * 10) / 10 + " ⭐";
   await updateRestaurants();
 });
 
-const clickRestaurant = (e, d) => {
-  window.open(d.restaurantId)
+
+const clickRestaurant = async (e, d) => {
+  stgoGroup
+    .selectAll("path")
+    .transition()
+    .duration(100)
+    .style("fill", "#7EC9B0");
+
+  const deliveries = await filterDeliveries(d.restaurantId);
+  
+  let comunas = new Set();
+  deliveries.forEach((delivery) => {
+    let comuna = "#" + delivery.address.split(", Región Metropolitana")[0].split(",").at(-1).replaceAll(" ", "");
+    comunas.add(comuna);
+  });
+  comunas = Array.from(comunas);
+
+  comunas.forEach((comuna) => {
+    d3.select(comuna)
+      .transition()
+      .duration(200)
+      .style("fill", "gold")
+  })
+  
+  console.log(d3.select(comunas));
 };
