@@ -484,7 +484,6 @@ const clickRestaurant = async (e, d) => {
     .style("fill", "#7EC9B0");
 
   const deliveries = await filterDeliveries(d.restaurantId);
-  console.log(deliveries);
   
   let comunas = new Set();
   deliveries.forEach((delivery) => {
