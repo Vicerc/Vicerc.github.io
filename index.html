@@ -12,11 +12,38 @@
 
   <body>
     <div class="horizontal-flex-container" style="display: flex">
-      <div id="map-container" style="flex: 8">
-        <svg id="map-svg"></svg>
-      </div>
-      <div class="descripcion" style="flex: 3">
+      <div class="descripcion" style="flex: 2">
         <div class="input-container">
+          <b>Precio</b>
+          <div>
+            <svg class="svg-prices">
+              <g>
+                <circle cx="10" cy="25" r="5" style="vertical-align: middle; fill: rgb(222, 104, 108);"></circle>
+                <text x="20" y="25" alignment-baseline="middle" style="fill: white; font-size: 14px;">$</text>
+                <circle cx="47" cy="25" r="5" style="vertical-align: middle; fill: rgb(211, 54, 59);"></circle>
+                <text x="57" y="25" alignment-baseline="middle" style="fill: white; font-size: 14px;">$$</text>
+                <circle cx="90" cy="25" r="5" style="vertical-align: middle; fill: rgb(167, 37, 41);"></circle>
+                <text x="100" y="25" alignment-baseline="middle" style="fill: white; font-size: 14px;">$$$</text>
+                <circle cx="140" cy="25" r="5" style="vertical-align: middle; fill: rgb(24, 57, 45);"></circle>
+                <text x="150" y="25" alignment-baseline="middle" style="fill: white; font-size: 14px;">null</text>
+              </g>
+            </svg>
+          </div>
+          <b>Puntuación</b>    
+          <div>
+            <svg class="svg-rating">
+              <g>
+                <circle cx="10" cy="25" r="2.45" style="vertical-align: middle; fill: rgb(222, 104, 108);"></circle>
+                <text x="20" y="25" alignment-baseline="middle" style="fill: white; font-size: 14px;">2 ⭐</text>
+                <circle cx="60" cy="25" r="4.9" style="vertical-align: middle; fill: rgb(222, 104, 108);"></circle>
+                <text x="70" y="25" alignment-baseline="middle" style="fill: white; font-size: 14px;">3 ⭐</text>
+                <circle cx="110" cy="25" r="7.35" style="vertical-align: middle; fill: rgb(222, 104, 108);"></circle>
+                <text x="123" y="25" alignment-baseline="middle" style="fill: white; font-size: 14px;">4 ⭐</text>
+                <circle cx="165" cy="25" r="9.8" style="vertical-align: middle; fill: rgb(222, 104, 108);"></circle>
+                <text x="180" y="25" alignment-baseline="middle" style="fill: white; font-size: 14px;">5 ⭐</text>
+              </g>
+            </svg>
+          </div>
           <h3>Filtros</h3>
           <div>
             <select name="categorie-select" id="categorie-select">
@@ -47,6 +74,11 @@
         </div>
         <h3>Descripción</h3>
         <p>Esta herramienta es un visualizador de restaurantes de <a href="https://www.ubereats.com/cl">UberEats</a>, y permite filtrar los datos para encontrar la ubicación del restaurant que se acomode a tus gustos!</p>
+        <h3 id="deliveries-title" style="visibility: hidden;">Deliveries</h3>
+        <div id="deliveries"></div>
+      </div>
+      <div id="map-container" style="flex: 8">
+        <svg id="map-svg"></svg>
       </div>
     </div>
     <script src="./src/map.js"></script>

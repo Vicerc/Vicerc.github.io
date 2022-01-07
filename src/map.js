@@ -290,8 +290,8 @@ initialLoad().then(({ comunasStgo, streetsStgo, uberRestaurants }) => {
     .on("mouseleave", mouseleave)
     .on("click", clickRestaurant);
 
-  addRatingLegend();
-  addPriceLegend();
+  // addRatingLegend();
+  // addPriceLegend();
 });
 
 filterDeliveries = async (deliveryId) => {
@@ -446,6 +446,36 @@ ratingSlider.addEventListener("change", async function () {
 });
 
 
+const showDeliveries = function(deliveries) {
+  const deliveriesTitle = document.getElementById("deliveries-title");
+  deliveriesTitle.style.visibility = "visible";
+
+  const deliveriesDiv = document.getElementById("deliveries");
+  deliveriesDiv.innerHTML = "";
+
+  const prices = {};
+  const times = {};
+  deliveries.forEach((delivery) => {
+    let comuna = delivery.address.split(", Región Metropolitana")[0].split(",").at(-1);
+    if (!prices[comuna]) {
+      prices[comuna] = [delivery.delivery_fee];
+      times[comuna] = delivery.delivery_time;
+    }
+    else {prices[comuna].push(delivery.delivery_fee);}
+  });
+  
+  for (let [key, value] of Object.entries(prices)) {
+    let p = document.createElement("p");
+    let b = document.createElement("b");
+    b.innerHTML = key;
+    b.classList.add("comuna-delivery");
+    p.appendChild(b);
+    p.innerHTML = p.innerHTML + ": $" + d3.mean(value) + " / " + times[key];
+    deliveriesDiv.appendChild(p);
+  }
+
+}
+
 const clickRestaurant = async (e, d) => {
   stgoGroup
     .selectAll("path")
@@ -454,6 +484,7 @@ const clickRestaurant = async (e, d) => {
     .style("fill", "#7EC9B0");
 
   const deliveries = await filterDeliveries(d.restaurantId);
+  console.log(deliveries);
   
   let comunas = new Set();
   deliveries.forEach((delivery) => {
@@ -468,6 +499,5 @@ const clickRestaurant = async (e, d) => {
       .duration(200)
       .style("fill", "gold")
   })
-  
-  console.log(d3.select(comunas));
+  showDeliveries(deliveries);
 };

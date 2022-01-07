@@ -8,7 +8,7 @@ body {
 
 #title {
   font-size: 24px;
-  fill: #EE9B00;
+  fill: white;
   font-weight: bold;
 }
 
@@ -30,10 +30,10 @@ a {
   color: #EE9B00;
 }
 b {
-  color: #EE9B00;
+  color: white;
 }
 h3 {
-  color: #EE9B00;
+  color: white;
 }
 
 select {
@@ -97,8 +97,9 @@ select {
 }
 
 p {
-  text-align: center;
+  text-align: justify;
   margin: auto;
+  font-size: 12px;
 }
 
 button {
@@ -125,6 +126,7 @@ button:hover {
 }
 .range-title {
   margin-top: 2vh;
+  font-size: 14px;
 }
 .rating-values {
   width: 15vw;
@@ -139,4 +141,16 @@ button:hover {
 }
 #categorie-select {
   margin-top: 1vh;
+}
+
+.svg-prices {
+  height: 6vh;
+}
+
+.svg-rating {
+  height: 5vh;
+}
+
+.comuna-delivery {
+  color: #EE9B00;
 }
